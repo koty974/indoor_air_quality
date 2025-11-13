@@ -21,8 +21,6 @@
 #define DHT_HUM_MEM 0     // Memory register address for humidity data
 #define DHT_TEMP_MEM 2    // Memory register address for temperature data
 
-//#define RTC_ADR 0x68     // (Commented) I2C address for Real-Time Clock (if used)
-//#define RTC_SEC_MEM 0    // (Commented) Memory address for seconds register
 
 
 // -- Global variables -----------------------------------------------
@@ -133,37 +131,3 @@ ISR(TIMER1_OVF_vect)
 }
 
 
-
-/*
- * The following commented-out sections are examples of how other I2C devices 
- * (like BME280 or MPU6050) could be used in a similar way.
- */
-
-/*
-    // Example: Reading chip ID from BME280 sensor (I2C address 0x76)
-    sla = 0x76;
-    twi_start();
-    ack = twi_write((sla<<1) | TWI_WRITE);
-    if (ack == 0) {       // Device responded
-        twi_write(0xd0);  // Chip ID register
-        twi_stop();
-        twi_start();
-        twi_write((sla<<1) | TWI_READ);
-        uint8_t value = twi_read(TWI_NACK);
-        twi_stop();
-
-        // Send chip ID value to UART (in hex)
-        itoa(value, string, 16);
-        uart_puts(string);
-        uart_puts("\t");
-    }
-*/
-
-/*
-    // Example: Resetting MPU-6050 accelerometer/gyroscope
-    // twi_start();
-    // twi_write((0x68<<1) | TWI_WRITE);
-    // twi_write(0x6b);  // Power management register
-    // twi_write(0x00);  // Clear sleep bit to wake the device
-    // twi_stop();
-*/
