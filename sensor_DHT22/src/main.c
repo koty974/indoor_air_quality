@@ -1,11 +1,3 @@
-/* 
- * Read values from I2C (TWI) temperature/humidity sensor and send
- * them to UART.
- * (c) 2017-2024 Tomas Fryza, MIT license
- *
- * Developed using PlatformIO and AVR 8-bit Toolchain 3.6.2.
- * Tested on Arduino Uno board and ATmega328P, 16 MHz.
- */
 
 // -- Includes -------------------------------------------------------
 #include <avr/io.h>         // AVR device-specific IO definitions (registers, I/O ports, etc.)
@@ -129,5 +121,6 @@ ISR(TIMER1_OVF_vect)
         flag_update_uart = 1;
     }
 }
+
 
 
