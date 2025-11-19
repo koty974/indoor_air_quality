@@ -7,7 +7,7 @@
 * Jakub Kotačka (...)
 * Miroslav Vysloužil (...)
 
-
+---
 
 ## Fáze 1: Návrh
 
@@ -30,7 +30,7 @@ Naplánovat, navrhnout a odůvodnit projekt před samotnou implementací.
 3. **Návrh softwaru**
    - Systémové **blokové schéma**, **vývojové diagramy** nebo **pseudokód** popisující plánovanou logiku a tok programu.
 
-
+---
 ## Fáze 2: Konstrukce (Vývoj prototypu)
 
 ### Cíl
