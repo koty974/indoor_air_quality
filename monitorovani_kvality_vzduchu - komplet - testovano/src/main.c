@@ -51,7 +51,7 @@ void oled_setup(void)
 
     // Nadpis velkým písmem
     oled_charMode(DOUBLESIZE);
-    oled_puts("KVALITA VZDUCHU");
+    oled_puts("INDOOR AIR Q");
     oled_charMode(NORMALSIZE); // Návrat na normální velikost písma
 
     // Popisky jednotlivých hodnot
@@ -270,4 +270,5 @@ ISR(TIMER1_OVF_vect)
         flag_update_uart = 1;
     }
 }
+
 
