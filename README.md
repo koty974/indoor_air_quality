@@ -2,10 +2,10 @@
 # INDOOR_AIR_QUALITY
 
 ### Členové týmu
-
-* Vítek Borovka (...)
-* Jakub Kotačka (...)
-* Miroslav Vysloužil (...)
+-každý popíše svou část kódu a senzor
+* Vítek Borovka (...) - I2C, display, DHT12
+* Jakub Kotačka (...) - ADC převodník, gp2y1010
+* Miroslav Vysloužil (...) - ADC převodník, MQ135 
 
 ---
 
@@ -23,6 +23,7 @@ Naplánovat, navrhnout a odůvodnit projekt před samotnou implementací.
 
 2. **Seznam hardwarových komponent**
    - Arduino UNO
+   - doplní Mirek, má u sebe
    - Sensor DHT12 pro měření teploty a vlhkosti
    - ... (další komponenty doplnit)
    - Vysvětlení, proč je každá komponenta použita a jaký má účel.
@@ -32,13 +33,16 @@ Naplánovat, navrhnout a odůvodnit projekt před samotnou implementací.
 
 ---
 ## Fáze 2: Konstrukce (Vývoj prototypu)
-
+- fotografie vývoje- popsat problémy během vývoje
 ### Cíl
-Implementovat a otestovat funkční prototyp na základě schváleného návrhu.
+Implementovat a otestovat funkční prototyp na základě schváleného návrhu
+- video funkčního prototypu
+   
 
 ### Poznámky
 - Týmy mohou využívat univerzitní laboratoře a zařízení pro práci s hardwarem.
 - Konstrukce obvodu může zahrnovat pasivní i aktivní komponenty na breadboardu nebo na vlastní PCB (pokud je k dispozici).
+- popíše Kuba odpory a kondíky
 
 ### Výstupy
 
