@@ -1,193 +1,211 @@
 // -- Includes -------------------------------------------------------
-// Základní AVR knihovny
-#include <avr/io.h>         // Definice registrů, portů a bitů pro AVR
-#include <avr/interrupt.h>  // Makra pro povolení/zablokování přerušení
-#include "timer.h"          // Vlastní knihovna pro konfiguraci timerů
-#include <twi.h>            // I2C (TWI) komunikace
-#include <uart.h>           // UART komunikace (Peter Fleury)
-#include <stdio.h>          // sprintf a snprintf pro formátovaný text
-#include <oled.h>           // OLED knihovna
-#include "gp2y1010.h"       // Sharp GP2Y1010 senzor prachu
+// Basic AVR libraries
+#include <avr/io.h>         // Definitions of registers, ports and bits for AVR
+#include <avr/interrupt.h>  // Macros for enabling/disabling interrupts
+#include "timer.h"          // Custom library for timer configuration
+#include <twi.h>            // I2C (TWI) communication
+#include <uart.h>           // UART communication (Peter Fleury)
+#include <stdio.h>          // sprintf and snprintf for formatted text
+#include <oled.h>           // OLED display library
+#include "gp2y1010.h"       // Sharp GP2Y1010 dust sensor library
 
 // -- Defines --------------------------------------------------------
-// I2C adresa DHT12 senzoru
+// I2C address of DHT12 sensor
 #define DHT_ADR      0x5c
-#define DHT_HUM_MEM  0      // Memory adresa pro vlhkost
-#define DHT_TEMP_MEM 2      // Memory adresa pro teplotu
+#define DHT_HUM_MEM  0      // Memory address for humidity
+#define DHT_TEMP_MEM 2      // Memory address for temperature
 
-// ADC pin pro MQ135 senzor
-#define MQ135_PIN 0         // ADC0 na Arduino Uno
+// ADC pin for MQ135 gas sensor
+#define MQ135_PIN 0         // ADC0 on Arduino Uno
 
 // -- Global variables -----------------------------------------------
-// Flag indikující, že je potřeba aktualizovat data na UART
+// Flag indicating that UART data needs to be updated
 volatile uint8_t flag_update_uart = 0;
 
-// Flag indikující, že je potřeba aktualizovat OLED
+// Flag indicating that OLED display needs to be updated
 volatile uint8_t flag_update_oled = 0;
 
-// Pole pro uložení hodnot z DHT12 senzoru
-volatile uint8_t dht12_values[5]; // [0]=hum int, [1]=hum dec, [2]=temp int, [3]=temp dec, [4]=checksum
+// Array for storing DHT12 sensor values
+volatile uint8_t dht12_values[5]; 
+// [0] = humidity integer, [1] = humidity decimal
+// [2] = temperature integer, [3] = temperature decimal
+// [4] = checksum
 
-// Hodnoty MQ135 senzoru
-volatile uint16_t mq135_value = 0;    // Raw ADC hodnota
-volatile uint16_t air_quality = 0;    // Vypočtená kvalita vzduchu
+// MQ135 sensor values
+volatile uint16_t mq135_value = 0;    // Raw ADC value
+volatile uint16_t air_quality = 0;    // Calculated air quality index
 
-// Hodnoty GP2Y1010 senzoru prachu
-volatile uint16_t dust_raw = 0;       // Raw ADC hodnota prachu
-volatile float dust_voltage = 0;      // Přepočtená napěťová hodnota
-volatile float dust_density = 0;      // Přepočtená hustota prachu v ug/m3
+// GP2Y1010 dust sensor values
+volatile uint16_t dust_raw = 0;       // Raw ADC value
+volatile float dust_voltage = 0;      // Converted voltage
+volatile float dust_density = 0;      // Converted dust density in ug/m3
 
-// Struktura senzoru GP2Y1010
+// GP2Y1010 sensor configuration structure
 GP2Y1010 dust = {
-    .ledPin = 2,    // PD2 digitální pin pro LED senzoru
-    .analogPin = 1  // ADC1 pro měření napětí z senzoru
+    .ledPin = 2,    // PD2 digital pin for sensor LED control
+    .analogPin = 1  // ADC1 for sensor analog output
 };
 
 // ------------------ OLED SETUP ------------------
 void oled_setup(void)
 {
-    oled_init(OLED_DISP_ON);  // Inicializace OLED a zapnutí displeje
-    oled_clrscr();             // Vymazání celé obrazovky
+    oled_init(OLED_DISP_ON);  // Initialize OLED and turn it on
+    oled_clrscr();            // Clear display
 
-    // Nadpis velkým písmem
+    // Display heading in double size
     oled_charMode(DOUBLESIZE);
     oled_puts("INDOOR AIR Q");
-    oled_charMode(NORMALSIZE); // Návrat na normální velikost písma
+    oled_charMode(NORMALSIZE); // Return to normal size
 
-    // Popisky jednotlivých hodnot
+    // Labels for each measurement
     oled_gotoxy(0, 2);
     oled_puts("MQ135 ADC:");
     oled_gotoxy(0, 3);
-    //oled_puts("MQ135 kvalita:");
-    //oled_gotoxy(0, 4);
-    oled_puts("Uroven:");
+    oled_puts("Level:");
     oled_gotoxy(0, 4);
-    oled_puts("Teplota [°C]:");
+    oled_puts("Temp [°C]:");
     oled_gotoxy(0, 5);
-    oled_puts("Vlhkost [%%]:");  // %% je pro zobrazení %
+    oled_puts("Humidity [%%]:");  // %% prints %
     oled_gotoxy(0, 6);
-    oled_puts("Prach [ug/m3]:");
+    oled_puts("Dust [ug/m3]:");
 
-    oled_display();  // Kopíruje buffer do OLED RAM a zobrazí obsah
+    oled_display();  // Transfer buffer to OLED RAM
 }
 
 // -------- ADC INITIALIZATION ---------
 void adc_init(void)
 {
-    // Nastavení referenčního napětí ADC na AVcc (5V)
+    // Use AVcc (5V) as ADC reference
     ADMUX |= (1 << REFS0);
 
-    // Nastavení vstupního kanálu ADC0
+    // Select ADC0 as default input
     ADMUX &= ~((1 << MUX3) | (1 << MUX2) | (1 << MUX1) | (1 << MUX0));
 
-    // Zapnutí ADC a nastavení předděličky na 128 (16 MHz / 128 = 125 kHz)
+    // Enable ADC and set prescaler to 128 (16MHz / 128 = 125kHz)
     ADCSRA |= (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 }
 
-// Funkce pro čtení ADC hodnoty z libovolného kanálu
+// Read ADC value from any channel
 uint16_t adc_read(uint8_t channel)
 {
-    // Výběr ADC kanálu (0-7)
+    // Select ADC channel (0–7)
     ADMUX = (ADMUX & 0xF0) | (channel & 0x0F);
 
-    // Start konverze
+    // Start conversion
     ADCSRA |= (1 << ADSC);
 
-    // Čekání na dokončení konverze
+    // Wait for conversion to finish
     while (ADCSRA & (1 << ADSC));
 
-    // Vrací naměřenou hodnotu
+    // Return measurement
     return ADC;
 }
 
-// Funkce pro určení textového popisu kvality vzduchu podle MQ135
+/*
+
+// -------- ADC INITIALIZATION for MQ135 ---------
+void mq135_adc_init(void)
+{
+    // Set ADC reference voltage to AVcc (5V)
+    ADMUX = (1 << REFS0);
+
+    // Enable ADC and set prescaler to 128 (16 MHz / 128 = 125 kHz)
+    ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+}
+
+// -------- ADC READ for MQ135 ---------
+uint16_t mq135_read(void)
+{
+    // Select ADC channel 0 (A0)
+    ADMUX = (ADMUX & 0xF0) | 0;  // 0 = ADC0
+
+    // Start conversion
+    ADCSRA |= (1 << ADSC);
+
+    // Wait until conversion is complete
+    while (ADCSRA & (1 << ADSC));
+
+    // Return ADC value
+    return ADC;
+}
+
+*/
+
+
+// Text description of MQ135 air quality
 const char* get_quality_level(uint16_t value)
 {
-    if (value < 300) return "VYNIKAJICI";
-    if (value < 500) return "DOBRA";
-    if (value < 700) return "STREDNI";
-    if (value < 900) return "SPATNA";
-    return "VELMI SPATNA";
+    if (value < 300) return "EXCELLENT";
+    if (value < 500) return "GOOD";
+    if (value < 700) return "MEDIUM";
+    if (value < 900) return "BAD";
+    return "VERY BAD";
 }
 
 // -------- TIMER1 (1s) INITIALIZATION --------
 void timer1_init(void)
 {
-    tim1_ovf_1sec();   // Nastavení Timer1 pro přetečení každou 1 sekundu
-    tim1_ovf_enable();  // Povolení přerušení při přetečení Timer1
+    tim1_ovf_1sec();    // Timer1 overflow every 1 second
+    tim1_ovf_enable();  // Enable Timer1 overflow interrupt
 }
-
-/*void timer0_init(void)
-{
-    tim0_ovf_16us();   // Nastavení Timer1 pro přetečení každou 1 sekundu
-    tim0_ovf_enable();  // Povolení přerušení při přetečení Timer1
-}*/
 
 // ------------------------ MAIN ------------------------
 int main(void)
 {
-    // Buffery pro formátovaný text
-    char uart_msg[10];    // Pro UART výpisy
-    char oled_msg[10];    // Pro OLED zobrazení hodnot
+    // Buffers for formatted text
+    char uart_msg[10];    
+    char oled_msg[10];    
 
-    // Inicializace periferií
+    // Initialize peripherals
     twi_init();                                   // I2C
     uart_init(UART_BAUD_SELECT(115200, F_CPU));  // UART 115200 baud
     adc_init();                                   // ADC
     oled_setup();                                 // OLED
-    gp2y1010_init(&dust);                         // GP2Y1010 senzor prachu
+    gp2y1010_init(&dust);                         // GP2Y1010 dust sensor
 
-    // Timer0 pro GP2Y1010 LED řízení (overflow každých 16us)
+    // Timer0 for controlling GP2Y1010 LED (overflow every 16µs)
     tim0_ovf_16us();
     tim0_ovf_enable();
 
-    sei();               // Povolení globálních přerušení
-    timer1_init();       // Inicializace Timer1 pro periodické měření
-    //timer0_init(); 
+    sei();               // Enable global interrupts
+    timer1_init();       // Start Timer1 for periodic measurements
 
     while (1)
     {
         // ---------------- UPDATE OLED ----------------
         if (flag_update_oled == 1)
         {
-            // Výpočet "kvality vzduchu" pro MQ135
+            // MQ135 air quality (simple scaling)
             air_quality = mq135_value / 10;
 
-            // Vymazání staré ADC hodnoty a zobrazení nové
+            // Display raw MQ135 ADC value
             oled_gotoxy(12,2);
-            oled_puts("     ");                      // Vymazání starých číslic
+            oled_puts("     ");                     
             oled_gotoxy(12,2);
-            sprintf(oled_msg, "%4d", mq135_value);  // Formátování na 4 znaky
+            sprintf(oled_msg, "%4d", mq135_value);
             oled_puts(oled_msg);
 
-            // Vymazání staré kvality vzduchu a zobrazení nové
-            //oled_gotoxy(15,3);
-            //oled_puts("     ");
-            //oled_gotoxy(15,3);
-            //sprintf(oled_msg, "%3d", air_quality);
-            //oled_puts(oled_msg);
-
-            // Vymazání starého textu a zobrazení slovní úrovně kvality
+            // Display textual quality level
             oled_gotoxy(8,3);
             oled_puts("             ");
             oled_gotoxy(8,3);
             oled_puts(get_quality_level(air_quality));
 
-            // Teplota DHT12
+            // Temperature from DHT12
             oled_gotoxy(13,4);
             oled_puts("        "); 
             oled_gotoxy(13,4);
             sprintf(oled_msg, "%u.%u C", dht12_values[2], dht12_values[3]);
             oled_puts(oled_msg);
 
-            // Vlhkost DHT12
+            // Humidity from DHT12
             oled_gotoxy(13,5);
             oled_puts("        ");
             oled_gotoxy(13,5);
             sprintf(oled_msg, "%u.%u %%", dht12_values[0], dht12_values[1]);
             oled_puts(oled_msg);
 
-            // Prach GP2Y1010
+            // Dust concentration GP2Y1010
             oled_gotoxy(14,6);
             oled_puts("        ");
             oled_gotoxy(14,6);
@@ -198,77 +216,67 @@ int main(void)
             sprintf(oled_msg, "%u.%u", dust_int, dust_dec);
             oled_puts(oled_msg);
 
-            //sprintf(oled_msg, "%.1f", dust_density);
-            //oled_puts(oled_msg);
+            oled_display();  // Refresh OLED content
 
-            // Aktualizace OLED
-            oled_display();
-
-            // Reset flagu
-            flag_update_oled = 0;
+            flag_update_oled = 0; // Reset flag
         }
 
         // ---------------- UPDATE UART ----------------
         if (flag_update_uart == 1)
         {
-            // Teplota
-            sprintf(uart_msg, "Teplota: %u.%u C\r\n", dht12_values[2], dht12_values[3]);
+            // Temperature
+            sprintf(uart_msg, "Temp: %u.%u C\r\n", dht12_values[2], dht12_values[3]);
             uart_puts(uart_msg);
 
-            // Vlhkost
-            sprintf(uart_msg, "Vlhkost: %u.%u %%\r\n", dht12_values[0], dht12_values[1]);
+            // Humidity
+            sprintf(uart_msg, "Humidity: %u.%u %%\r\n", dht12_values[0], dht12_values[1]);
             uart_puts(uart_msg);
 
-            // MQ135 raw hodnota a kvalita
-            sprintf(uart_msg, "MQ135 tt=%u kvalita=%u\r\n", mq135_value, air_quality);
+            // MQ135 raw and quality
+            sprintf(uart_msg, "MQ135 raw=%u quality=%u\r\n", mq135_value, air_quality);
             uart_puts(uart_msg);
 
-            // Prach GP2Y1010
-            //sprintf(uart_msg, "Prach: %.1f ug/m3\r\n\r\n", dust_density);
-            //uart_puts(uart_msg);
-
-            // Prach GP2Y1010 – bezpečné pevné formátování
+            // Dust value
             uint16_t dust_int = (uint16_t)dust_density;
             uint16_t dust_dec = (uint16_t)((dust_density - dust_int) * 10);
-
-            sprintf(uart_msg, "Prach: %u.%u ug/m3\r\n\r\n", dust_int, dust_dec);
+            sprintf(uart_msg, "Dust: %u.%u ug/m3\r\n\r\n", dust_int, dust_dec);
             uart_puts(uart_msg);
 
-            // Reset flagu
-            flag_update_uart = 0;
+            flag_update_uart = 0; // Reset flag
         }
     }
 
-    return 0; // Program se nikdy nedostane sem
+    return 0; // Program never reaches this point
 }
 
 // ------------------------ ISR TIMER1 ------------------------
-// Timer1 přerušení každou 1 sekundu
+// Timer1 interrupt every 1 second
 ISR(TIMER1_OVF_vect)
 {
-    static uint8_t counter = 0;  // Počítadlo přetečení Timer1
+    static uint8_t counter = 0;  // Overflow counter
     counter++;
 
-    // Každých 5 sekund provést měření
+    // Perform measurements every 5 seconds
     if (counter >= 5)
     {
         counter = 0;
 
-        // Čtení MQ135
+        // Read MQ135 sensor
         mq135_value = adc_read(MQ135_PIN);
 
-        // Čtení DHT12 přes I2C (5 bytů)
+        // Read DHT12 via I2C (5 bytes)
         twi_readfrom_mem_into(DHT_ADR, DHT_HUM_MEM, dht12_values, 5);
 
-        // Čtení GP2Y1010
+        // Read GP2Y1010 dust sensor
         dust_raw = gp2y1010_read_raw(&dust);
         dust_voltage = gp2y1010_adc_to_voltage(dust_raw);
         dust_density = gp2y1010_voltage_to_density(dust_voltage);
 
-        // Nastavení flagů pro hlavní smyčku
+        // Request updates in main loop
         flag_update_oled = 1;
         flag_update_uart = 1;
     }
 }
+
 
 
