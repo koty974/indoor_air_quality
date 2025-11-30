@@ -149,16 +149,101 @@ skleněný či jiný podklad. Námi použitý displej má malé rozměry, komuni
 
 Hlavním požadavkem je měření kvality ovzduší, snímat hodnoty ze senzorů po určitém čase (v našem případě každých 5 vteřin) a výsledné hodnoty zobrazit na OLED display. Kvůli kontrole správného zobrazení na OLED display jsme se rozhodli hodnoty zobrazovat také pomocí UART na sériový monitor v počítači.
 
+Jednotlivé senzory byly rozděleny mezi členy týmu. Každý člen se nejprve zaobíral problematikou svého senzoru a kódem samostatně. Následně jsme jednotlivé části kodů postupně zkompletovali. Problematikou zobrazování jsme se zabývali již společně.
 
-### Výstupy
+<img width="498" height="769" alt="DE2 drawio" src="https://github.com/user-attachments/assets/c1ab9e70-3824-4cdd-ab52-16da34ebec31" />
 
-1. **Formulace problému a návrh řešení**
+### Postup vývoje
+
+1. **Využití I²C sběrnice pro komunikaci mezi DHT12 a OLED displejem**
+Jak již bylo zmíněno výše, oba tyto moduly využívají I²C sběrnici, díky čemuž je možné je připojit ke stejným dvěma vodičům (SDA a SCL). To výrazně zjednodušilo propojení i následnou komunikaci.
+
+Adresace zařízení na I²C
+
+Každé zařízení na I²C má vlastní 7bitovou adresu.
+V projektu byly použity tyto adresy:
+
+DHT12: adresa 0x5C
+
+OLED displej (SSD1306): adresa 0x3C
+
+Na základě těchto adres mikrokontrolér rozlišuje, se kterým modulem komunikuje.
+
+Získávání dat z DHT12
+
+DHT12 poskytuje teplotu a vlhkost ve formě pěti bajtů:
+
+bajt 0: integer vlhkosti
+
+bajt 1: desetinná část vlhkosti
+
+bajt 2: integer teploty
+
+bajt 3: desetinná část teploty
+
+bajt 4: kontrolní součet (checksum)
+
+Pro hodnoty jsem si vytvořil pole o velikosti 5 bajtů, kam se načítají data pomocí I²C čtení.
+
+Postup čtení:
+
+zahájit komunikaci s adresou DHT12
+
+nastavit registr, odkud chci číst (obvykle 0x00)
+
+přečíst postupně 5 bajtů
+
+uložit je do připraveného pole
+
+převést integer + decimal na skutečné hodnoty teploty a vlhkosti
+
+Po implementaci čtení bylo možné zobrazit teplotu i vlhkost na OLED i posílat je přes UART.
+
+OLED displej přes I²C
+
+OLED displej SSD1306 používá také I²C, takže funguje na podobném principu:
+
+odeslání řídících příkazů (init sekvence)
+
+přenos dat do grafické paměti displeje
+
+vykreslení textu (např. teplota, vlhkost, AQI, úroveň prachu)
+
+Vytvořil jsem funkci pro inicializaci displeje a následně funkce pro zobrazování textu a měřených hodnot.
+
+Problémy a jejich řešení
+
+Na začátku jsem měl problém se stabilním zobrazováním hodnot z DHT12 na UART a OLED.
+Hlavní potíže způsobovalo:
+
+nesprávné čtení dat v době, kdy senzor ještě nebyl připraven
+
+špatně nastavená I²C adresa
+
+někdy nekorektní inicializace displeje
+
+Postupným laděním jsem zjistil, že řešení je:
+
+správně nastavit adresy
+
+vytvořit pevné pole pro data senzoru
+
+číst všech 5 bajtů najednou pomocí I²C
+
+zpracovat hodnoty mimo přerušení
+
+aktualizovat OLED jen při nastaveném příznaku
+
+Po opravě těchto kroků fungovalo čtení ze senzoru i zobrazení na OLED spolehlivě.
+  
+     
+2. **Formulace problému a návrh řešení**
    - Jasně popsat problém, který projekt řeší.
    - Vysvětlit, jak navržené řešení s využitím mikrokontroléru (MCU) tento problém řeší.
 
 
 3. **Návrh softwaru**
-<img width="498" height="769" alt="DE2 drawio" src="https://github.com/user-attachments/assets/c1ab9e70-3824-4cdd-ab52-16da34ebec31" />
+
 
 ---
 ## Fáze 2: Konstrukce (Vývoj prototypu)
