@@ -162,25 +162,19 @@ Nejprve jsme adresovali jednotlivá zařízení (SLAVE), aby mikrokontrolér (MA
  -DHT12: adresa 0x5C 
  -OLED displej: adresa 0x3C
 
-![1-i2cbus (1)](https://github.com/user-attachments/assets/66491161-cf7a-4120-b904-c848468ec418)<svg xmlns="http://www.w3.org/2000/svg" width="800" height="328"><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M191.51 109.76V180M49.15 180H754.7"/><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M49.15 140H754.7"/><path fill="none" stroke="#ED1C24" stroke-width="3" stroke-miterlimit="10" d="M49.15 20H754.7"/><text transform="translate(12.22 144.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">SDA</text><text transform="translate(10.22 24.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">+Vdd</text><text transform="translate(759.22 24.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">+Vdd</text><text transform="translate(13.11 185.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">SCL</text><text transform="translate(763.22 144.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">SDA</text><text transform="translate(764.11 185.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">SCL</text><path fill="none" stroke="#ED1C24" stroke-width="3" stroke-miterlimit="10" d="M191.51 53.28V20M273.51 53.28V20"/><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M273.51 109.76V140"/><text transform="translate(115.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Master</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M108.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M158.87 243.09V180"/><text transform="translate(315.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Slave</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M308.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M358.87 243.09V180"/><text transform="translate(435.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Slave</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M428.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M478.87 243.09V180"/><text transform="translate(555.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Slave</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M548.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M598.87 243.09V180"/><text transform="translate(675.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Slave</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M668.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M718.87 243.09V180"/><text transform="translate(213.97 75.56)"><tspan x="0" y="0" font-family="Arial, Helvetica, sans-serif" font-size="12">Pull-Up</tspan><tspan x="-5.33" y="14.4" font-family="Arial, Helvetica, sans-serif" font-size="12">Resistors</tspan></text><path fill="none" stroke="#000" stroke-width="3" stroke-miterlimit="10" d="M183.41 53.28h16.2v56.48h-16.2zM265.41 53.28h16.2v56.48h-16.2zM83.87 243.09h99.54v69.44H83.87zM283.87 243.09h99.54v69.44h-99.54zM403.87 243.09h99.54v69.44h-99.54zM523.87 243.09h99.54v69.44h-99.54zM643.87 243.09h99.54v69.44h-99.54z"/></svg>
-
+<img width="1067" height="431" alt="Snímek obrazovky 2025-11-30 215106" src="https://github.com/user-attachments/assets/e68711dd-45c2-415f-bbe3-03ab2709a707" />
 
 
 Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor poskytuje teplotu a vlhkost ve formě pěti bajtů:
+ -bajt 0: integer vlhkosti
+ -bajt 1: desetinná část vlhkosti
+ -bajt 2: integer teploty
+ -bajt 3: desetinná část teploty
+ -bajt 4: kontrolní součet (checksum)
 
-bajt 0: integer vlhkosti
+ Pro hodnoty jsem si vytvořili pole o velikosti 5 bajtů, kam se načítají data pomocí I²C čtení.
 
-bajt 1: desetinná část vlhkosti
-
-bajt 2: integer teploty
-
-bajt 3: desetinná část teploty
-
-bajt 4: kontrolní součet (checksum)
-
-Pro hodnoty jsem si vytvořili pole o velikosti 5 bajtů, kam se načítají data pomocí I²C čtení.
-
-
+ <img width="561" height="131" alt="Snímek obrazovky 2025-11-30 215337" src="https://github.com/user-attachments/assets/757bf3a1-12ea-4bc2-be17-377d6ed75c12" />
   
      
 2. **Formulace problému a návrh řešení**
