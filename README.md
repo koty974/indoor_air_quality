@@ -157,7 +157,7 @@ Naplánovat, navrhnout a odůvodnit projekt před samotnou implementací.
 
 
 3. **Návrh softwaru**
-   - Systémové **blokové schéma**, **vývojové diagramy** nebo **pseudokód** popisující plánovanou logiku a tok programu.
+<img width="498" height="769" alt="DE2 drawio" src="https://github.com/user-attachments/assets/c1ab9e70-3824-4cdd-ab52-16da34ebec31" />
 
 ---
 ## Fáze 2: Konstrukce (Vývoj prototypu)
