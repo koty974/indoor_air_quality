@@ -2,7 +2,7 @@
 # INDOOR_AIR_QUALITY
 
 ### Členové týmu
--každý popíše svou část kódu a senzor
+Po domluvě byl každému účastníkovi projektu přidělen konkrétní senzor k nastudování a napsání kódu.
 * Vítek Borovka (...) - I2C, display, DHT12
 * Jakub Kotačka (...) - ADC převodník, gp2y1010
 * Miroslav Vysloužil (...) - ADC převodník, MQ135 
