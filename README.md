@@ -95,7 +95,10 @@ Tato vývojová platforma slouží jako centrální mozek celého projektu.
 <img width="631" height="431" alt="image" src="https://github.com/user-attachments/assets/a8c9721f-2292-474f-a243-1088ef4c2037" />
 
 ### OLED displej
-
+OLED displej funguje na bázi tzv. organických diod, což jsou součástky schopné 
+generovat světelné záření v případě, že na ně působí elektrické pole. Do 
+obrazovky se nijak nemontují, nýbrž se společně s dalšími vrstvami nanášejí na 
+skleněný či jiný podklad.
 <img width="440" height="440" alt="image" src="https://github.com/user-attachments/assets/5ab46378-585c-4155-8a8b-92ad5be7220b" />
 
 ## Zapojení
