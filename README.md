@@ -158,20 +158,15 @@ Jednotlivé senzory byly rozděleny mezi členy týmu. Každý člen se nejprve 
 1. **Využití I²C sběrnice pro komunikaci mezi DHT12 a OLED displejem**
 Jak již bylo zmíněno výše, oba tyto moduly využívají I²C sběrnici, díky čemuž je možné je připojit ke stejným dvěma vodičům (SDA a SCL). To výrazně zjednodušilo propojení i následnou komunikaci.
 
-Adresace zařízení na I²C
+Nejprve jsme adresovali jednotlivá zařízení (SLAVE), aby mikrokontrolér (MASTER) rozlišil, se kterým modulem komunikuje:
+ -DHT12: adresa 0x5C 
+ -OLED displej: adresa 0x3C
 
-Každé zařízení na I²C má vlastní 7bitovou adresu.
-V projektu byly použity tyto adresy:
+![1-i2cbus (1)](https://github.com/user-attachments/assets/66491161-cf7a-4120-b904-c848468ec418)<svg xmlns="http://www.w3.org/2000/svg" width="800" height="328"><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M191.51 109.76V180M49.15 180H754.7"/><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M49.15 140H754.7"/><path fill="none" stroke="#ED1C24" stroke-width="3" stroke-miterlimit="10" d="M49.15 20H754.7"/><text transform="translate(12.22 144.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">SDA</text><text transform="translate(10.22 24.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">+Vdd</text><text transform="translate(759.22 24.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">+Vdd</text><text transform="translate(13.11 185.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">SCL</text><text transform="translate(763.22 144.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">SDA</text><text transform="translate(764.11 185.02)" font-family="Arial, Helvetica, sans-serif" font-size="14">SCL</text><path fill="none" stroke="#ED1C24" stroke-width="3" stroke-miterlimit="10" d="M191.51 53.28V20M273.51 53.28V20"/><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M273.51 109.76V140"/><text transform="translate(115.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Master</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M108.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M158.87 243.09V180"/><text transform="translate(315.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Slave</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M308.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M358.87 243.09V180"/><text transform="translate(435.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Slave</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M428.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M478.87 243.09V180"/><text transform="translate(555.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Slave</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M548.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M598.87 243.09V180"/><text transform="translate(675.18 281.56)" font-family="Arial, Helvetica, sans-serif" font-size="14">Slave</text><path fill="none" stroke="#2E3192" stroke-width="3" stroke-miterlimit="10" d="M668.87 243.09V140"/><path fill="none" stroke="#00A651" stroke-width="3" stroke-miterlimit="10" d="M718.87 243.09V180"/><text transform="translate(213.97 75.56)"><tspan x="0" y="0" font-family="Arial, Helvetica, sans-serif" font-size="12">Pull-Up</tspan><tspan x="-5.33" y="14.4" font-family="Arial, Helvetica, sans-serif" font-size="12">Resistors</tspan></text><path fill="none" stroke="#000" stroke-width="3" stroke-miterlimit="10" d="M183.41 53.28h16.2v56.48h-16.2zM265.41 53.28h16.2v56.48h-16.2zM83.87 243.09h99.54v69.44H83.87zM283.87 243.09h99.54v69.44h-99.54zM403.87 243.09h99.54v69.44h-99.54zM523.87 243.09h99.54v69.44h-99.54zM643.87 243.09h99.54v69.44h-99.54z"/></svg>
 
-DHT12: adresa 0x5C
 
-OLED displej (SSD1306): adresa 0x3C
 
-Na základě těchto adres mikrokontrolér rozlišuje, se kterým modulem komunikuje.
-
-Získávání dat z DHT12
-
-DHT12 poskytuje teplotu a vlhkost ve formě pěti bajtů:
+Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor poskytuje teplotu a vlhkost ve formě pěti bajtů:
 
 bajt 0: integer vlhkosti
 
@@ -183,58 +178,9 @@ bajt 3: desetinná část teploty
 
 bajt 4: kontrolní součet (checksum)
 
-Pro hodnoty jsem si vytvořil pole o velikosti 5 bajtů, kam se načítají data pomocí I²C čtení.
+Pro hodnoty jsem si vytvořili pole o velikosti 5 bajtů, kam se načítají data pomocí I²C čtení.
 
-Postup čtení:
 
-zahájit komunikaci s adresou DHT12
-
-nastavit registr, odkud chci číst (obvykle 0x00)
-
-přečíst postupně 5 bajtů
-
-uložit je do připraveného pole
-
-převést integer + decimal na skutečné hodnoty teploty a vlhkosti
-
-Po implementaci čtení bylo možné zobrazit teplotu i vlhkost na OLED i posílat je přes UART.
-
-OLED displej přes I²C
-
-OLED displej SSD1306 používá také I²C, takže funguje na podobném principu:
-
-odeslání řídících příkazů (init sekvence)
-
-přenos dat do grafické paměti displeje
-
-vykreslení textu (např. teplota, vlhkost, AQI, úroveň prachu)
-
-Vytvořil jsem funkci pro inicializaci displeje a následně funkce pro zobrazování textu a měřených hodnot.
-
-Problémy a jejich řešení
-
-Na začátku jsem měl problém se stabilním zobrazováním hodnot z DHT12 na UART a OLED.
-Hlavní potíže způsobovalo:
-
-nesprávné čtení dat v době, kdy senzor ještě nebyl připraven
-
-špatně nastavená I²C adresa
-
-někdy nekorektní inicializace displeje
-
-Postupným laděním jsem zjistil, že řešení je:
-
-správně nastavit adresy
-
-vytvořit pevné pole pro data senzoru
-
-číst všech 5 bajtů najednou pomocí I²C
-
-zpracovat hodnoty mimo přerušení
-
-aktualizovat OLED jen při nastaveném příznaku
-
-Po opravě těchto kroků fungovalo čtení ze senzoru i zobrazení na OLED spolehlivě.
   
      
 2. **Formulace problému a návrh řešení**
