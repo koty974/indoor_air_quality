@@ -96,6 +96,7 @@ Tato vývojová platforma slouží jako centrální mozek celého projektu.
 
 ### OLED displej
 
+<img width="440" height="440" alt="image" src="https://github.com/user-attachments/assets/5ab46378-585c-4155-8a8b-92ad5be7220b" />
 
 ## Zapojení
 ### Schéma zapojení
