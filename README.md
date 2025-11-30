@@ -94,9 +94,8 @@ Jedná se o zjednodušený lineární model podle datasheetu.
 
 
 ### Arduino UNO
-Tato vývojová deska slouží jako centrální mozek celého projektu. Na desce se nachází mikrokontroler ATmega328P s velkoým počtem základních periferií.
-
-## Hlavní vlastnosti
+Tato vývojová deska slouží jako centrální mozek celého projektu. 
+#### Hlavní vlastnosti
 
 Mikrokontrolér: ATmega328P
 
