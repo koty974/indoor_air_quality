@@ -156,6 +156,7 @@ Jednotlivé senzory byly rozděleny mezi členy týmu. Každý člen se nejprve 
 ### Postup vývoje
 
 1. **Využití I²C sběrnice pro komunikaci mezi DHT12 a OLED displejem**
+
 Jak již bylo zmíněno výše, oba tyto moduly využívají I²C sběrnici, díky čemuž je možné je připojit ke stejným dvěma vodičům (SDA a SCL). To výrazně zjednodušilo propojení i následnou komunikaci.
 
 Nejprve jsme adresovali jednotlivá zařízení (SLAVE), aby mikrokontrolér (MASTER) rozlišil, se kterým modulem komunikuje:
