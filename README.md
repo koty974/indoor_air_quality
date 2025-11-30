@@ -4,7 +4,7 @@
 ### Členové týmu
 Po domluvě byl každému účastníkovi projektu přidělen konkrétní senzor k nastudování a napsání kódu.
 * Vítek Borovka - DHT12, I2C, display, dokumentace
-* Jakub Kotačka  - gp2y1010, ADC převodník, dokumentace
+* Jakub Kotačka  - GP2Y1010, ADC převodník, dokumentace
 * Miroslav Vysloužil - MQ135, ADC převodník, dokumentace
 
 ---
