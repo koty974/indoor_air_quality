@@ -10,7 +10,7 @@ Po domluvě byl každému účastníkovi projektu přidělen konkrétní senzor 
 ---
 
 ## Základní vize projektu
-Dýchání vzduchu je nedílnou částí života. Občas se ale jeho kvalita může díky okolním vlivům zhoršit a to může mít dopad na naše zdraví (únava, bolesti hlavy a jiné).
+Dýchání vzduchu je nedílnou součástí života. Občas se ale jeho kvalita může díky okolním vlivům zhoršit, a to může mít dopad na naše zdraví (únava, bolesti hlavy a jiné).
 Základní myšlenka byla sestrojit platformu, která umožní vyhodnotit kvalitu ovzduší v místnosti. Konkrétně aby platforma měřila teplotu, vlhkost, kvalitu vzduchu a pevné částice. Cílem je tedy časté měření techto veličin s pomocí senzorů a zobrazení na displej. Pro řešení tohoto problému je využita vývojová deska Arduino UNO, která sesbírá, zpracuje a zobrazí data na displeji.
 Na obrázku níže je představa zapojení platformy, její napájení a komunikace.
 
