@@ -21,8 +21,11 @@
 
 ### MQ-135
 MQ-135 je senzor pro detekci kvality vzduchu.
+
 Dokáže detekovat amoniak, oxid dusíku, benzen, alkohol, kouř a další škodlivé látky. MQ-135 nedokáže poznat konkrétní plyn. Reaguje na více látek najednou, takže výsledek je jen orientační.
+
 Uvnitř senzoru je malá topná spirála, která ohřívá vrstvu oxidu cíničitého. Při výskytu nějakého plynu se změní odpor této vrstvy, a tím se mění i napětí na výstupním analogovém pinu.
+
 Ten připojíme na AD převodník A0 mikrokontroleru, který následně analogovou hodnotu převede na digitální v rozsahu 0-1023. Podle této hodnoty můžeme určit kvalitu okolního vzduchu.
 
  **Očekávané hodnoty**
