@@ -19,6 +19,13 @@ Na obrázku níže je představa zapojení platformy, její napájení a komunik
 ## Seznam hardwarových komponentů
 
 ### DHT12
+DHT12 je digitální senzor určený pro měření teploty a vlhkosti. 
+
+Senzor měří relativní vlhkost vzduchu v rozsahu 20 % až 95 % RH s přesnotí +-5 % RH. Teplota se měří v rozsahu -20°C až 60°C s přesností +-0,5°C. Pracovní napětí senzoru je 2,7 V až 5,5 V.
+
+Samotné měření vně senzoru probíhá pomocí NTC termistoru (zmenšuje svůj odpor s rostoucí teplotou), kapacitního čidla (dvě elektrody pokryté polymerní vrstvou, která absorbuje vodní páru a mění tak svou permitivitu a tím celkovou kapacitu mezi elektrodami) a interního mikrokontroléru (provádí přepočet hodnot odporu a kapacity na teplotu a vlhkost, formátuje výsledky do 5 bajtů).
+
+Oproti starším modelům, jako je například DHT11, využívá DHT12 rozhraní I2C.
 
 <img width="408" height="336" alt="image" src="https://github.com/user-attachments/assets/8258d98e-c46c-4049-a049-59689eefd782" />
 
