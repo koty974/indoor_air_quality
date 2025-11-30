@@ -3,9 +3,9 @@
 
 ### Členové týmu
 Po domluvě byl každému účastníkovi projektu přidělen konkrétní senzor k nastudování a napsání kódu.
-* Vítek Borovka (...) - I2C, display, DHT12
-* Jakub Kotačka (...) - ADC převodník, gp2y1010
-* Miroslav Vysloužil (...) - ADC převodník, MQ135 
+* Vítek Borovka - DHT12, I2C, display, dokumentace
+* Jakub Kotačka  - gp2y1010, ADC převodník, dokumentace
+* Miroslav Vysloužil - MQ135, ADC převodník, dokumentace
 
 ---
 
@@ -94,7 +94,24 @@ Jedná se o zjednodušený lineární model podle datasheetu.
 
 
 ### Arduino UNO
-Tato vývojová platforma slouží jako centrální mozek celého projektu.
+Tato vývojová deska slouží jako centrální mozek celého projektu. Na desce se nachází mikrokontroler ATmega328P s velkoým počtem základních periferií.
+Hlavní vlastnosti
+
+Mikrokontrolér: ATmega328P
+
+Napájení: 5 V (USB) nebo 7–12 V externě
+
+Digitální piny: 14 (z toho 6 PWM výstupů)
+
+Analogové vstupy: 6
+
+Flash paměť: 32 KB (z toho 0,5 KB pro bootloader)
+
+RAM: 2 KB
+
+Komunikace: UART, SPI, I2C
+
+Rozhraní: USB-B pro programování, napájení a komunikaci s PC
 <img width="631" height="431" alt="image" src="https://github.com/user-attachments/assets/a8c9721f-2292-474f-a243-1088ef4c2037" />
 
 ### OLED displej
