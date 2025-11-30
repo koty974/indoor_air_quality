@@ -95,7 +95,8 @@ Jedná se o zjednodušený lineární model podle datasheetu.
 
 ### Arduino UNO
 Tato vývojová deska slouží jako centrální mozek celého projektu. Na desce se nachází mikrokontroler ATmega328P s velkoým počtem základních periferií.
-Hlavní vlastnosti
+
+## Hlavní vlastnosti
 
 Mikrokontrolér: ATmega328P
 
@@ -117,16 +118,20 @@ Rozhraní: USB-B pro programování, napájení a komunikaci s PC
 ### OLED displej
 OLED displej funguje na bázi tzv. organických diod, což jsou součástky schopné 
 generovat světelné záření v případě, že na ně působí elektrické pole. Do 
-obrazovky se nijak nemontují, nýbrž se společně s dalšími vrstvami nanášejí na 
-skleněný či jiný podklad.
+obrazovky se nijak nemontují, nýbrž se společně s dalšími vrstvami nanášejí na
+skleněný či jiný podklad. Námi použitý displej má malé rozměry, komunikaci s I2C a pracovní napájecí napětí 3,3/5V.
 <img width="440" height="440" alt="image" src="https://github.com/user-attachments/assets/5ab46378-585c-4155-8a8b-92ad5be7220b" />
 
 ## Zapojení
 ### Schéma zapojení
+
 <img width="944" height="705" alt="image" src="https://github.com/user-attachments/assets/8318c876-3d57-438d-a702-1c8154eba07a" />
 
 ### Schéma zapojení v nepájivém poly
 <img width="945" height="709" alt="image" src="https://github.com/user-attachments/assets/11fa0962-498c-491a-9682-d716b68f81e2" />
+
+### Video
+
 
 
 
