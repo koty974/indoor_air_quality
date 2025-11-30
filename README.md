@@ -160,17 +160,24 @@ Jednotlivé senzory byly rozděleny mezi členy týmu. Každý člen se nejprve 
 Jak již bylo zmíněno výše, oba tyto moduly využívají I²C sběrnici, díky čemuž je možné je připojit ke stejným dvěma vodičům (SDA a SCL). To výrazně zjednodušilo propojení i následnou komunikaci.
 
 Nejprve jsme adresovali jednotlivá zařízení (SLAVE), aby mikrokontrolér (MASTER) rozlišil, se kterým modulem komunikuje:
+
  -DHT12: adresa 0x5C 
+ 
  -OLED displej: adresa 0x3C
 
 <img width="1067" height="431" alt="Snímek obrazovky 2025-11-30 215106" src="https://github.com/user-attachments/assets/e68711dd-45c2-415f-bbe3-03ab2709a707" />
 
 
 Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor poskytuje teplotu a vlhkost ve formě pěti bajtů:
+
  -bajt 0: integer vlhkosti
+ 
  -bajt 1: desetinná část vlhkosti
+ 
  -bajt 2: integer teploty
+ 
  -bajt 3: desetinná část teploty
+ 
  -bajt 4: kontrolní součet (checksum)
 
  Pro hodnoty jsem si vytvořili pole o velikosti 5 bajtů, kam se načítají data pomocí I²C čtení.
