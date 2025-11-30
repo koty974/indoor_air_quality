@@ -144,10 +144,11 @@ skleněný či jiný podklad. Námi použitý displej má malé rozměry, komuni
 
 
 
-
+## Software
 ### Cíl
 
-Naplánovat, navrhnout a odůvodnit projekt před samotnou implementací.
+Hlavním požadavkem je měření kvality ovzduší, snímat hodnoty ze senzorů po určitém čase (v našem případě každých 5 vteřin) a výsledné hodnoty zobrazit na OLED display. Kvůli kontrole správného zobrazení na OLED display jsme se rozhodli hodnoty zobrazovat také pomocí UART na sériový monitor v počítači.
+
 
 ### Výstupy
 
