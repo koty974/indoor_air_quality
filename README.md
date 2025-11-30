@@ -9,7 +9,36 @@
 
 ---
 
-## Fáze 1: Návrh
+## Základní vize projektu
+
+<img width="850" height="615" alt="image" src="https://github.com/user-attachments/assets/1ff3b3b7-9f76-4ded-84ee-4b81fe1b4a82" />
+
+## Seznam hardwarových komponentů
+
+### DHT12
+
+<img width="408" height="336" alt="image" src="https://github.com/user-attachments/assets/8258d98e-c46c-4049-a049-59689eefd782" />
+
+### MQ-135
+MQ-135 je senzor pro detekci kvality vzduchu.
+Dokáže detekovat amoniak, oxid dusíku, benzen, alkohol, kouř a další škodlivé látky. MQ-135 nedokáže poznat konkrétní plyn. Reaguje na více látek najednou, takže výsledek je jen orientační.
+Uvnitř senzoru je malá topná spirála, která ohřívá vrstvu oxidu cíničitého. Při výskytu nějakého plynu se změní odpor této vrstvy, a tím se mění i napětí na výstupním analogovém pinu.
+Ten připojíme na AD převodník A0 mikrokontroleru, který následně analogovou hodnotu převede na digitální v rozsahu 0-1023. Podle této hodnoty můžeme určit kvalitu okolního vzduchu.
+
+ **Očekávané hodnoty**
+
+
+Čistý venkovní vzduch				150–200
+
+Průměrný vnitřní prostor			250–350
+
+Znečištěná oblast					400–600+
+
+Blízko alkoholu/benzínu				700–900+
+
+<img width="580" height="405" alt="image" src="https://github.com/user-attachments/assets/7887a600-30de-4814-9e15-83fa93a4c327" />
+
+### GP2Y1010
 GP2Y1010 je optický senzor prachových částic, který měří koncentraci prachu (PM) v ovzduší pomocí rozptylu infračerveného světla.
 Uvnitř senzoru se nacházejí dvě hlavní součásti:
 1. Infračervená LED
@@ -58,6 +87,24 @@ PM = (V - V0)/0.005
 Každých 0,005 V odpovídá přibližně 1 µg/m³ prachu.
 Jedná se o zjednodušený lineární model podle datasheetu.
 
+<img width="530" height="529" alt="image" src="https://github.com/user-attachments/assets/0efc3de2-6ac5-4986-a6cf-07d307c927eb" />
+
+
+### Arduino UNO
+Tato vývojová platforma slouží jako centrální mozek celého projektu.
+<img width="631" height="431" alt="image" src="https://github.com/user-attachments/assets/a8c9721f-2292-474f-a243-1088ef4c2037" />
+
+### OLED displej
+
+
+## Zapojení
+### Schéma zapojení
+<img width="944" height="705" alt="image" src="https://github.com/user-attachments/assets/8318c876-3d57-438d-a702-1c8154eba07a" />
+
+### Schéma zapojení v nepájivém poly
+<img width="945" height="709" alt="image" src="https://github.com/user-attachments/assets/11fa0962-498c-491a-9682-d716b68f81e2" />
+
+
 
 ### Cíl
 
@@ -69,12 +116,6 @@ Naplánovat, navrhnout a odůvodnit projekt před samotnou implementací.
    - Jasně popsat problém, který projekt řeší.
    - Vysvětlit, jak navržené řešení s využitím mikrokontroléru (MCU) tento problém řeší.
 
-2. **Seznam hardwarových komponent**
-   - Arduino UNO
-   - doplní Mirek, má u sebe
-   - Sensor DHT12 pro měření teploty a vlhkosti
-   - ... (další komponenty doplnit)
-   - Vysvětlení, proč je každá komponenta použita a jaký má účel.
 
 3. **Návrh softwaru**
    - Systémové **blokové schéma**, **vývojové diagramy** nebo **pseudokód** popisující plánovanou logiku a tok programu.
@@ -82,6 +123,7 @@ Naplánovat, navrhnout a odůvodnit projekt před samotnou implementací.
 ---
 ## Fáze 2: Konstrukce (Vývoj prototypu)
 - fotografie vývoje- popsat problémy během vývoje
+- 
 ### Cíl
 Implementovat a otestovat funkční prototyp na základě schváleného návrhu
 - video funkčního prototypu
