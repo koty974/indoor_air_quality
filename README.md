@@ -200,7 +200,7 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
 ![Poster-(18-X-24-in)-(1) pdf](https://github.com/user-attachments/assets/9505bfdb-d042-4679-a5ae-6a0561603d46)
 
 ## Zdroje
-DHT12:[datasheet](sources/dht12_manual (2).pdf)
+DHT12:[datasheet]([sources/dht12_manual (2).pdf](https://github.com/koty974/indoor_air_quality/blob/main/sources/dht12_manual%20(2).pdf))
 
 MQ-135:
 
