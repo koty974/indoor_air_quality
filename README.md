@@ -92,7 +92,7 @@ Výpočet napětí z 10bit ADC:
 5V je referenční napětí (AVcc).
 
 Napětí → koncentrace prachu – gp2y1010_voltage_to_density()
-Typické napětí čistého vzduchu bývá kolem 1,9 V.
+Typické napětí čistého vzduchu bývá kolem 1 V.
 Koncentrace prachu se vypočítá přibližně:
 
 PM = (V - V0)/0.005
