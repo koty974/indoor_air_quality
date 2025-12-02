@@ -196,57 +196,6 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
 
 
 
-
 ## Prezentace – plakát
 ![Poster-(18-X-24-in)-(1) pdf](https://github.com/user-attachments/assets/9505bfdb-d042-4679-a5ae-6a0561603d46)
-
-
-
-
-
-	 
-2. **Formulace problému a návrh řešení**
-   - Jasně popsat problém, který projekt řeší.
-   - Vysvětlit, jak navržené řešení s využitím mikrokontroléru (MCU) tento problém řeší.
-
-
-3. **Návrh softwaru**
-
-
----
-## Fáze 2: Konstrukce (Vývoj prototypu)
-- fotografie vývoje- popsat problémy během vývoje
-- 
-### Cíl
-Implementovat a otestovat funkční prototyp na základě schváleného návrhu
-- video funkčního prototypu
-   
-
-### Poznámky
-- Týmy mohou využívat univerzitní laboratoře a zařízení pro práci s hardwarem.
-- Konstrukce obvodu může zahrnovat pasivní i aktivní komponenty na breadboardu nebo na vlastní PCB (pokud je k dispozici).
-- popíše Kuba odpory a kondíky
-
-### Výstupy
-
-1. **Video demonstrace prototypu**
-   - Krátké **max. 3min video** ukazující funkcionalitu prototypu.
-   - Srozumitelně vysvětlit funkce systému, způsob ovládání a chování.
-
-2. **Odevzdání zdrojového kódu**
-   - Dobře okomentovaný C/C++ kód (Arduino) nahraný na GitHub.
-   - Zdůraznit klíčové funkce, algoritmy a případné vlastní knihovny.
-
-3. **Technická dokumentace**
-   - Bloková schémata
-   - Schémata zapojení
-   - Odůvodnění hlavních rozhodnutí v návrhu hardwaru i softwaru
-
-4. **Prezentace – plakát (A3 nebo větší)**
-   - Vizualizace shrnující:
-     - Koncept projektu a jeho motivaci
-     - Návrh systému a funkčnost
-     - Přínos, využití a potenciální dopady
-
-
 
