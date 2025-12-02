@@ -185,7 +185,19 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
 
  <img width="561" height="131" alt="Snímek obrazovky 2025-11-30 215337" src="https://github.com/user-attachments/assets/757bf3a1-12ea-4bc2-be17-377d6ed75c12" />
   
-     
+
+
+
+
+
+## Prezentace – plakát
+![Poster-(18-X-24-in)-(1) pdf](https://github.com/user-attachments/assets/9505bfdb-d042-4679-a5ae-6a0561603d46)
+
+
+
+
+
+	 
 2. **Formulace problému a návrh řešení**
    - Jasně popsat problém, který projekt řeší.
    - Vysvětlit, jak navržené řešení s využitím mikrokontroléru (MCU) tento problém řeší.
