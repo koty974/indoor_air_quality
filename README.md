@@ -204,5 +204,5 @@ DHT12:
 
 MQ-135:
 
-GP2Y1010:
+GP2Y1010: https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2y1010au_e.pdf
 
