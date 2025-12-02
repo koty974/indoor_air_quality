@@ -143,8 +143,11 @@ skleněný či jiný podklad. Námi použitý displej má malé rozměry, komuni
 
 
 
-
 ### Video
+
+
+https://github.com/user-attachments/assets/60efba0b-d33e-45a5-a0d7-bd4f6daf292e
+
 
 
 
