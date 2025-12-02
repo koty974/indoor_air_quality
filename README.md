@@ -139,7 +139,10 @@ skleněný či jiný podklad. Námi použitý displej má malé rozměry, komuni
 <img width="944" height="705" alt="image" src="https://github.com/user-attachments/assets/8318c876-3d57-438d-a702-1c8154eba07a" />
 
 ### Schéma zapojení v nepájivém poli
-<img width="945" height="709" alt="image" src="https://github.com/user-attachments/assets/11fa0962-498c-491a-9682-d716b68f81e2" />
+<img width="956" height="833" alt="image" src="https://github.com/user-attachments/assets/01f1815b-d64a-4ec5-b1cd-077e51397426" />
+
+
+
 
 ### Video
 
