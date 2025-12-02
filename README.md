@@ -206,7 +206,13 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
 
 [DHT12_description](https://electropeak.com/dht12-digital-temperature-and-humidity-sensor#:~:text=Description:%20The%20DHT12%20humidity%20sensor%20is%20an,digital%20conversion%20and%20produces%20the%20digital%20output.)
 
+[OLED_display_datasheet](https://github.com/koty974/indoor_air_quality/blob/main/sources/sh1106_datasheet.pdf)
 
+[OLED_display](https://randomnerdtutorials.com/esp32-ssd1306-oled-display-arduino-ide/)
+
+[I2C](https://docs.arduino.cc/learn/communication/wire/)
+
+[Využití I2C sběrnice](https://www.itnetwork.cz/hardware-pc/arduino/hardware/arduino-a-i2c-sbernice)
 
 MQ-135:
 
