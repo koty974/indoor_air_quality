@@ -199,3 +199,10 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
 ## Prezentace – plakát
 ![Poster-(18-X-24-in)-(1) pdf](https://github.com/user-attachments/assets/9505bfdb-d042-4679-a5ae-6a0561603d46)
 
+## Zdroje
+DHT12:
+
+MQ-135:
+
+GP2Y1010:
+
