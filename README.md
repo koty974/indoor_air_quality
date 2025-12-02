@@ -200,9 +200,9 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
 ![Poster-(18-X-24-in)-(1) pdf](https://github.com/user-attachments/assets/9505bfdb-d042-4679-a5ae-6a0561603d46)
 
 ## Zdroje
-DHT12:[DHT12_datasheet](https://github.com/koty974/indoor_air_quality/blob/main/sources/dht12_manual%20(2).pdf)
-	  [Teploměr a vlhkoměr DHT12](https://navody.dratek.cz/navody-k-produktum/teplomer-a-vlhkomer-dht12.html)
-	  [DHT12_description](https://electropeak.com/dht12-digital-temperature-and-humidity-sensor#:~:text=Description:%20The%20DHT12%20humidity%20sensor%20is%20an,digital%20conversion%20and%20produces%20the%20digital%20output.)
+*[DHT12_datasheet](https://github.com/koty974/indoor_air_quality/blob/main/sources/dht12_manual%20(2).pdf)
+*[Teploměr a vlhkoměr DHT12](https://navody.dratek.cz/navody-k-produktum/teplomer-a-vlhkomer-dht12.html)
+*[DHT12_description](https://electropeak.com/dht12-digital-temperature-and-humidity-sensor#:~:text=Description:%20The%20DHT12%20humidity%20sensor%20is%20an,digital%20conversion%20and%20produces%20the%20digital%20output.)
 
 MQ-135:
 
