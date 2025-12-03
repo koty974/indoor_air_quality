@@ -18,10 +18,9 @@ volatile uint16_t ticks = 0;
 void gp2y1010_init(GP2Y1010 *s) {
     // Configure LED pin as output
     DDRD |= (1 << s->ledPin);
-    
+    // Set reference Voltage 5V
     ADMUX = (1 << REFS0);
-
-
+    // Prescaler = 64, fadc= 16MHz/64 = 250kHz
     ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1);
 
 }
@@ -84,4 +83,5 @@ float gp2y1010_voltage_to_density(float v) {
     if (v < v0) return 0.0f;
     return (v - v0) / 0.005f;   // 0.005V ~ 1 ug/m3
 }
+
 
