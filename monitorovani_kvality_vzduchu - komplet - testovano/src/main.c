@@ -15,9 +15,6 @@
 #define DHT_HUM_MEM  0      // Memory address for humidity
 #define DHT_TEMP_MEM 2      // Memory address for temperature
 
-// ADC pin for MQ135 gas sensor
-#define MQ135_PIN 0         // ADC0 on Arduino Uno
-
 // -- Global variables -----------------------------------------------
 // Flag indicating that UART data needs to be updated
 volatile uint8_t flag_update_uart = 0;
@@ -244,6 +241,7 @@ ISR(TIMER1_OVF_vect)
         flag_update_uart = 1;
     }
 }
+
 
 
 
