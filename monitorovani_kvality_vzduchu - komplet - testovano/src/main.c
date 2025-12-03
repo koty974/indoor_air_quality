@@ -74,14 +74,14 @@ void oled_setup(void)
 
 
 // -------- ADC INITIALIZATION for MQ135 ---------
-void mq135_adc_init(void)
-{
-    // Set ADC reference voltage to AVcc (5V)
-    ADMUX = (1 << REFS0);
-
-    // Enable ADC and set prescaler to 128 (16 MHz / 128 = 125 kHz)
-    ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
-}
+//void mq135_adc_init(void)
+//{
+//     Set ADC reference voltage to AVcc (5V)
+//    ADMUX = (1 << REFS0);
+//
+//     Enable ADC and set prescaler to 128 (16 MHz / 128 = 125 kHz)
+//    ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+//}
 
 // -------- ADC READ for MQ135 ---------
 uint16_t mq135_read(void)
@@ -127,7 +127,7 @@ int main(void)
     // Initialize peripherals
     twi_init();                                   // I2C
     uart_init(UART_BAUD_SELECT(115200, F_CPU));  // UART 115200 baud
-    mq135_adc_init();                                   // ADC
+    //mq135_adc_init();                                   // mq135ADC
     oled_setup();                                 // OLED
     gp2y1010_init(&dust);                         // GP2Y1010 dust sensor
 
@@ -244,6 +244,7 @@ ISR(TIMER1_OVF_vect)
         flag_update_uart = 1;
     }
 }
+
 
 
 
