@@ -155,7 +155,7 @@ https://github.com/user-attachments/assets/60efba0b-d33e-45a5-a0d7-bd4f6daf292e
 ## Software
 ### Cíl
 
-Hlavním požadavkem je měření kvality ovzduší, snímat hodnoty ze senzorů po určitém čase (v našem případě každých 5 vteřin) a výsledné hodnoty zobrazit na OLED display. Kvůli kontrole správného zobrazení na OLED display jsme se rozhodli hodnoty zobrazovat také pomocí UART na sériový monitor v počítači.
+Hlavním požadavkem je měření kvality ovzduší, snímat hodnoty ze senzorů po určitém čase (v našem případě každých 5 vteřin) a výsledné hodnoty zobrazit na OLED display. Kvůli kontrole správného zobrazení na OLED display jsme se rozhodli hodnoty zobrazovat také na sériový monitor v počítači.
 
 Jednotlivé senzory byly rozděleny mezi členy týmu. Každý člen se nejprve zaobíral problematikou svého senzoru a kódem samostatně. Následně jsme jednotlivé části kodů postupně zkompletovali. Problematikou zobrazování jsme se zabývali již společně.
 
