@@ -203,6 +203,7 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
 ![Poster-(18-X-24-in)-(1) pdf](https://github.com/user-attachments/assets/9505bfdb-d042-4679-a5ae-6a0561603d46)
 
 ## Zdroje
+DHT12:
 [DHT12_datasheet](https://github.com/koty974/indoor_air_quality/blob/main/sources/dht12_manual%20(2).pdf)
 
 [Teploměr a vlhkoměr DHT12](https://navody.dratek.cz/navody-k-produktum/teplomer-a-vlhkomer-dht12.html)
@@ -217,7 +218,18 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
 
 [Využití I2C sběrnice](https://www.itnetwork.cz/hardware-pc/arduino/hardware/arduino-a-i2c-sbernice)
 
-MQ-135:
+MQ-135: https://www.laskakit.cz/senzor-pro-detekci-kvality-vzduchu-mq-135/
+
+https://www.brandttechnologies.co.za/post/monitor-air-quality-with-arduino
 
 GP2Y1010: https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2y1010au_e.pdf
 
+https://www.youtube.com/watch?v=bRCVtVuYjRI
+
+AD převodník: https://developerhelp.microchip.com/xwiki/bin/view/products/mcu-mpu/8-bit-avr/getting-started/8-bit-avr-adc/
+
+https://luanspl.github.io/ATMEGA328P-Microcontroller-ADC/
+
+Knihovny a inspirace: https://github.com/tomas-fryza/avr-labs
+
+Jako asistenční nástroj byl využit ChatGPT
