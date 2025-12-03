@@ -175,8 +175,6 @@ Nejprve jsme adresovali jednotlivá zařízení (SLAVE), aby mikrokontrolér (MA
 
 <img width="1067" height="431" alt="Snímek obrazovky 2025-11-30 215106" src="https://github.com/user-attachments/assets/e68711dd-45c2-415f-bbe3-03ab2709a707" />
 
-<img width="601" height="56" alt="image" src="https://github.com/user-attachments/assets/9b2a97c0-34e8-4414-92ea-8d19f62e4bbf" />
-
 
 
 Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor poskytuje teplotu a vlhkost ve formě pěti bajtů:
@@ -194,6 +192,8 @@ Dále jsme museli vyřešit problém získávání dat z DHT12, protože senzor 
  Pro hodnoty jsme si vytvořili pole o velikosti 5 bajtů, kam se načítají data pomocí I²C čtení.
 
  <img width="561" height="131" alt="Snímek obrazovky 2025-11-30 215337" src="https://github.com/user-attachments/assets/757bf3a1-12ea-4bc2-be17-377d6ed75c12" />
+
+ <img width="601" height="56" alt="image" src="https://github.com/user-attachments/assets/9b2a97c0-34e8-4414-92ea-8d19f62e4bbf" />
   
 
 
