@@ -118,8 +118,8 @@ void timer1_init(void)
 int main(void)
 {
     // Buffers for formatted text
-    char uart_msg[10];    
-    char oled_msg[10];    
+    char uart_msg[32];    
+    char oled_msg[16];    
 
     // Initialize peripherals
     twi_init();                                   // I2C
@@ -241,6 +241,7 @@ ISR(TIMER1_OVF_vect)
         flag_update_uart = 1;
     }
 }
+
 
 
 
